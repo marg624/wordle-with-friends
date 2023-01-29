@@ -50,11 +50,16 @@ class Board extends React.Component {
       let game = await readGame(this.state.gameId);
       if (game == null) {return false;}
 
-      if (this.state.player0 == null || this.state.player1 == null) {
+      if (this.state.player0 == null && game.player0 != null) {
         this.state.player0 = game.player0;
+        this.setState(this.state);
+      }
+
+      if (this.state.player1 == null && game.player1 != null) {
         this.state.player1 = game.player1;
         this.setState(this.state);
       }
+
 
       if (this.state.player1 == null) {
         this.state.waitingFor = "another player to join"

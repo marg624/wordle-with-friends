@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import utilStyles from '../styles/utils.module.css';
-import readGame from '../utils/utils';
+import { readGame } from '../utils/utils';
 
 
 function InitialOptions(props) {

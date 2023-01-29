@@ -54,6 +54,7 @@ class GetHandler implements HttpHandler {
         } else {
             Gson gson = new Gson();
             json = gson.toJson(data);
+            System.out.println(json);
         }
         exchange.sendResponseHeaders(code, json.length());
         OutputStream os = exchange.getResponseBody();
@@ -78,6 +79,7 @@ class CreateHandler implements HttpHandler {
         InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
         String json = br.readLine();
+        System.out.println("   Request: " + json);
         Gson gson = new Gson();
         Data data = gson.fromJson(json, Data.class);
 
@@ -114,6 +116,7 @@ class PutHandler implements HttpHandler {
         InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
         String json = br.readLine();
+        System.out.println("   Request: " + json);
         Gson gson = new Gson();
         DataUpdate dataUpdated = gson.fromJson(json, DataUpdate.class);
         Data dataOriginal = _db.get(gameId);
