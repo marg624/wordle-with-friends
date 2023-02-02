@@ -16,6 +16,10 @@ const client = new DynamoDBClient({
   region: process.env.REGION
 });
 
+console.log(process.env.ACCESS_KEY);
+console.log(process.env.SECRET_KEY);
+console.log(process.env.REGION);
+
 export const getOccurrences = (letter, word) => {
     var count = (word.split(letter)).length - 1;
     return count;
