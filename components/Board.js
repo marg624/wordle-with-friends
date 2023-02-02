@@ -19,7 +19,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     const boardState1 = {
-      0: {readOnly: this.props.isFirst, guess: null, evaluation: null},
+      0: {readOnly: !this.props.isFirst, guess: null, evaluation: null},
       1: {readOnly: true, guess: null, evaluation: null},
       2: {readOnly: true, guess: null, evaluation: null},
       3: {readOnly: true, guess: null, evaluation: null},

@@ -15,7 +15,7 @@ function BoardTask(props) {
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
 
-  return null ;
+  return null;
 }
 
 export default BoardTask;

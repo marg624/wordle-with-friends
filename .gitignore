@@ -4,4 +4,4 @@
 .next
 *.class
 node_modules
-
+.env.local
