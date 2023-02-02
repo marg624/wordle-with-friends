@@ -1,5 +1,20 @@
 import utilStyles from '../styles/utils.module.css';
 import dictionary from '../resources/5-letter-words.js';
+import {
+  DynamoDBClient,
+  PutItemCommand,
+  GetItemCommand,
+  UpdateItemCommand,
+  DeleteItemCommand
+} from '@aws-sdk/client-dynamodb';
+
+const client = new DynamoDBClient({
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_KEY
+  },
+  region: process.env.REGION
+});
 
 export const getOccurrences = (letter, word) => {
     var count = (word.split(letter)).length - 1;
@@ -60,7 +75,7 @@ export const currTurn = (boardStateGuesses) => {
     return null;
 }
 
-export const readGame = (gameId) => {
+export const readGame_test = (gameId) => {
     let urlRead = 'http://localhost:8080/get?gameId=' + gameId; // var data = await 
     let dataResp = fetch(urlRead, {
         method: 'GET',
@@ -78,7 +93,19 @@ export const readGame = (gameId) => {
     return dataResp;    
 }
 
-export const createGame = (gameId, word, player) => {
+export const readGame = async(gameId) => {
+    let { Item } = await client.send(
+      new GetItemCommand({
+        TableName: "game",
+        Key: {
+          id: { S: "g" + gameId}
+        }
+      })
+    );
+    return JSON.parse(Item.content.S);
+}
+
+export const createGame_test = (gameId, word, player) => {
   let urlWrite = 'http://localhost:8080/create?gameId=' + gameId;
   const state = {
     player0: player,
@@ -102,7 +129,26 @@ fetch(urlWrite, {
 }); 
 }
 
-export const updateGame = (gameId, playerName, guessedWord) => {
+export const createGame = async (gameId, word, player) => {
+  const state = {
+    player0: player,
+    winningWord: word,
+    guesses: []
+    };
+   let bodyJson = JSON.stringify(state)
+   let { Item } = await client.send(
+      new PutItemCommand({
+        TableName: "game",
+        Item: {
+          id: { S: "g" + gameId },
+          content: { S: bodyJson }
+        }
+      })
+    );
+    return Item;
+}
+
+export const updateGame_test = (gameId, playerName, guessedWord) => {
     //let urlWrite = 'https://mxkqird8ei.execute-api.us-west-2.amazonaws.com/default/write-board';
     let urlWrite = 'http://localhost:8080/update?gameId=' + gameId;
 
@@ -131,7 +177,35 @@ export const updateGame = (gameId, playerName, guessedWord) => {
  return resp;   
 }
 
+export const updateGame = async (gameId, playerName, guessedWord) => {
+    let currJson = await readGame(gameId);
+    // update player 2
+    if (guessedWord == null && currJson.player1 == null) {
+        currJson.player1 = playerName;
+    } else if (guessedWord != null){
+        let newData = [...currJson.guesses, guessedWord] 
+        currJson.guesses = newData;
+    }
 
+    let bodyJson = JSON.stringify(currJson)
+    let resp = true;
+
+    let { Attributes } = await client.send(
+      new UpdateItemCommand({
+        TableName: "game",
+        Key: {
+          id: { S: "g" + gameId }
+        },
+        UpdateExpression: 'set content = :c',
+        ExpressionAttributeValues: {
+          ':c': { S: bodyJson }
+        },
+        ReturnValues: 'ALL_NEW'
+      })
+    );
+
+    return Attributes;   
+}
 
 
 

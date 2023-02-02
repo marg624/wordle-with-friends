@@ -7,6 +7,7 @@
     import logo from '../resources/logo.png';
     import refresh from '../resources/refresh.png';
     import { readGame, createGame, updateGame } from '../utils/utils';
+    import * as uuid from 'uuid';
 
 
     const gameIdCreate = Math.floor(Math.random() * 5758);
