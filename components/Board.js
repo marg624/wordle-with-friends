@@ -201,24 +201,32 @@ render() {
 
   let player0 = this.state.player0;
   let player1 = this.state.player1;
-
-  if (!this.props.isSinglePlayer && this.state.player1 == null) {
-      player1 = "waiting for a friend ..."
-  }
-
   let showVs = "vs.";
-  if (this.props.isSinglePlayer) {
+
+  if (!this.props.isSinglePlayer) {
+    if (this.state.isFirst) {
+      player0 = player0 + " (you)";
+      if (this.state.player1 == null) {
+        player1 = "waiting for a friend ...";
+      }
+    } else {
+      player1 = player1 + " (you)";
+    }
+  } else {
+    player0 = "";
     showVs = "";
   }
 
   let breakNum = isMobile? 9 : 13;
 
+
   return (
       <div className={utilStyles.center}> 
         {this.state.win && <Confetti run="false" />}
-        Game ID: {this.props.gameId} <br/> <br/>
-        {this.props.isFirst && <span><strong>{player0} (you)</strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em> {player1} </span>}
-        {!this.props.isFirst && <span>{player0}<strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em>{player1} (you)</strong></span>}
+
+        {!this.props.isSinglePlayer  &&  <span>Game ID: {this.props.gameId} <br/> <br/></span>}
+        {this.props.isFirst && <span><strong>{player0}</strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em> {player1} </span>}
+        {!this.props.isFirst && <span>{player0}<strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em>{player1}</strong></span>}
 <br/>
         {!this.props.isSinglePlayer  &&  <BoardTask updateStateFunc={this.updateState} meFirst={this.props.isFirst} player0={player0}  player1={player1} /> }
         <Row0 /> 
