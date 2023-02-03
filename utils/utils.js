@@ -75,24 +75,6 @@ export const currTurn = (boardStateGuesses) => {
     return null;
 }
 
-export const readGame_test = (gameId) => {
-    let urlRead = 'http://localhost:8080/get?gameId=' + gameId; // var data = await 
-    let dataResp = fetch(urlRead, {
-        method: 'GET',
-        headers: {
-         'Content-type': 'application/json; charset=UTF-8',
-         'Access-Control-Allow-Origin': '*'
-     },
- })
-    .then((response) => {
-        return  response.json();
-    })
-    .catch(err => {console.log(err.message);
-        return null;
-    });  
-    return dataResp;    
-}
-
 export const readGame = async(gameId) => {
     let { Item } = await client.send(
       new GetItemCommand({
@@ -102,31 +84,10 @@ export const readGame = async(gameId) => {
         }
       })
     );
+    if (Item == null || Item.content == null || Item.content.S == null) {
+        return null;
+    }
     return JSON.parse(Item.content.S);
-}
-
-export const createGame_test = (gameId, word, player) => {
-  let urlWrite = 'http://localhost:8080/create?gameId=' + gameId;
-  const state = {
-    player0: player,
-    winningWord: word,
-    guesses: []
-};
-
-let bodyJson = JSON.stringify(state)
-
-fetch(urlWrite, {
-    method: 'POST',
-    body: bodyJson,
-    data: bodyJson,
-    headers: {
-     'Content-type': 'application/json; charset=UTF-8',
-     'Access-Control-Allow-Origin': '*'
- },
-})
-.catch((err) => {
- console.log("ERROR: " + err.message);
-}); 
 }
 
 export const createGame = async (gameId, word, player) => {
@@ -148,36 +109,21 @@ export const createGame = async (gameId, word, player) => {
     return Item;
 }
 
-export const updateGame_test = (gameId, playerName, guessedWord) => {
-    //let urlWrite = 'https://mxkqird8ei.execute-api.us-west-2.amazonaws.com/default/write-board';
-    let urlWrite = 'http://localhost:8080/update?gameId=' + gameId;
 
-
-    const updateData = {
-     player: playerName,
-     guess: guessedWord,
- };
-
- let bodyJson = JSON.stringify(updateData)
- let resp = true;
-
- fetch(urlWrite, {
-    method: 'POST',
-    body: bodyJson,
-    data: bodyJson,
-    headers: {
-     'Content-type': 'application/json; charset=UTF-8',
-     'Access-Control-Allow-Origin': '*'
- },
-})
- .catch((err) => {
-     console.log("ERROR: " + err.message);
-     resp = false;
- });     
- return resp;   
+export const updateGame = (gameId, playerName, guessedWord) => {
+    let resp = true;
+    updateGameHelper(gameId, playerName, guessedWord)
+    .then(
+        (response) => {
+            resp = true;
+        })
+    .catch((err) => {
+        resp = false;
+    });  
+    return resp;
 }
 
-export const updateGame = async (gameId, playerName, guessedWord) => {
+export const updateGameHelper = async (gameId, playerName, guessedWord) => {
     let currJson = await readGame(gameId);
     // update player 2
     if (guessedWord == null && currJson.player1 == null) {
@@ -204,9 +150,7 @@ export const updateGame = async (gameId, playerName, guessedWord) => {
       })
     );
 
-    return Attributes;   
+    return Attributes;
 }
-
-
 
 

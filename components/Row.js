@@ -1,5 +1,5 @@
 import utilStyles from '../styles/utils.module.css';
-import { evaluations, isWord, updateGame, currTurn } from '../utils/utils';
+import { evaluations, isWord, updateGame, readGame, currTurn } from '../utils/utils';
 import {
   useState,
   useRef,

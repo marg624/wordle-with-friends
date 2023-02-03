@@ -37,6 +37,8 @@ class Board extends React.Component {
     let player11 = null;
     if (isFirst1) {
       player01 = playerName1;
+    } else {
+      player11 = playerName1;
     }
     this.state = {boardState: boardState1, alphabetState:alphabetState1, win:win1, isSinglePlayer:isSinglePlayer1, winningWord: winningWord1, playerName: playerName1, gameId: gameId1, isFirst: isFirst1, player0:player01, player1:player11, waitingFor:""};
     this.focusNext = this.focusNext.bind(this);
@@ -50,38 +52,42 @@ class Board extends React.Component {
       let game = await readGame(this.state.gameId);
       if (game == null) {return false;}
 
+      let didChange = false;
       if (this.state.player0 == null && game.player0 != null) {
         this.state.player0 = game.player0;
-        this.setState(this.state);
+        didChange = true;
       }
 
       if (this.state.player1 == null && game.player1 != null) {
         this.state.player1 = game.player1;
-        this.setState(this.state);
+        didChange = true;
       }
 
-
-      if (this.state.player1 == null) {
-        this.state.waitingFor = "another player to join"
-      } else if ((game.guesses.length) % 2 == 0) { 
+      if ((game.guesses.length) % 2 == 0) { 
         if (this.state.waitingFor != game.player0) {
           this.state.waitingFor = game.player0;
-          this.setState(this.state);
+          didChange = true;
         }
       } else {
         if (this.state.waitingFor != game.player1) {
           this.state.waitingFor = game.player1;
-          this.setState(this.state);
+          didChange = true;
         }
+      }
+
+      if (didChange) {
+        this.setState(this.state);
       }
       
       for (let i = 0; i < game.guesses.length; i++) {
         let currWordGuess = this.state.boardState[i].guess;
-        let dbGameGuess = game.guesses[i];       
+        let dbGameGuess = game.guesses[i];   
+        // we've already seen the word and evaluated    
         if (currWordGuess != null) {
           if (currWordGuess.toUpperCase() != dbGameGuess.toUpperCase()) {
             console.log("   Doesn't match with DB: (boardState)" + currWordGuess + " : (db)"+ dbGameGuess);
           } 
+        // there's a guessed word that isn't in our state
         } else {
           this.state.boardState[i].guess = dbGameGuess;
           let evaluationWord = evaluations(Object.assign([], dbGameGuess), this.state.winningWord, Object.assign([], this.state.winningWord)); 
@@ -101,17 +107,19 @@ class Board extends React.Component {
               if (meFirst) {
                 p = game.player0;
               }
-              alert("You lose! The word was " + this.props.winningWord.toUpperCase())
+              alert("You lose to " + p + "! The word was " + this.props.winningWord.toUpperCase())
             }
             return true;
           } else if (i > 5) {
-            alert("You both lose! The word was " + this.props.winningWord.toUpperCase());
+            alert("Both players lose! The word was " + this.props.winningWord.toUpperCase());
             return true;
           } else {
             return false;
           }
         }
       }
+
+      return true;
     }
   }
 
@@ -134,13 +142,12 @@ class Board extends React.Component {
     } else if (nextRow < 6) {
       if (this.state.isSinglePlayer) {
        this.state.boardState[nextRow].readOnly = false;
-     }
-     this.setState(this.state);
-   } else {
-    alert("You lose! The word was " + this.props.winningWord.toUpperCase())
-  }
-  this.state.boardState = newArr;
-  this.setState(this.state);
+      }
+      this.setState(this.state);
+    } else {
+      alert("You lose! The word was " + this.props.winningWord.toUpperCase())
+    }
+    
 }
 
 alphaHelper(guessedWord, evaluationWord) {
@@ -194,16 +201,17 @@ render() {
   let player0 = this.state.player0;
   let player1 = this.state.player1;
 
+  if (!this.props.isSinglePlayer && this.state.player1 == null) {
+      player1 = "waiting for a friend ..."
+  }
+
   return (
       <div className={utilStyles.center}> 
         {this.state.win && <Confetti run="false" />}
-        Game ID: {this.props.gameId} <br/>
-        Players: <br/>
-        {player0} <br/>
-        {player1} <br/>
-
-        {!this.props.isSinglePlayer  &&  <em>waiting on {this.state.waitingFor}.... </em>}
-
+        Game ID: {this.props.gameId} <br/> <br/>
+        {this.props.isFirst && <span><strong>{player0} (you)</strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vs.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em> {player1} </span>}
+        {!this.props.isFirst && <span>{player0}<strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vs.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em>{player1} (you)</strong></span>}
+<br/>
         {!this.props.isSinglePlayer  &&  <BoardTask updateStateFunc={this.updateState} meFirst={this.props.isFirst} player0={player0}  player1={player1} /> }
         <Row0 /> 
         <Row1 />
@@ -211,7 +219,9 @@ render() {
         <Row3 /> 
         <Row4 />
         <Row5 /> 
-        <br/><br/>
+        <br/>
+        {!this.props.isSinglePlayer  &&  <em><br/>{this.state.waitingFor}'s turn... </em>}
+        <br/>
         <div className={utilStyles.center }><br/>
           {Object.keys(this.state.alphabetState).map((key, index) => {
             let addBreak = (index == 12) ? <br/> : ""

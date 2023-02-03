@@ -4,17 +4,18 @@ import { readGame } from '../utils/utils';
 
 
 function InitialOptions(props) {
-
-  const [gameId, setGameId] = useState("");
-  const [isSinglePlayer, setIsSinglePlayer] = useState(false);
-  const [player, setPlayer] = useState("");
+  const [player, setPlayer] = useState("Player" + Math.floor(Math.random() * 1000000));
 
   const handleSumbitExisting = (event) => {
     event.preventDefault();
+    const gameId = prompt('Please enter id of game to join')
     const re = /^[0-9\b]+$/;
-    console.log(`game id entered: ${gameId}`)
+    console.log("game id entered: " + gameId)
     let id = gameId
     let resp = readGame(id);
+    if (resp == null) {
+      resp = readGame(id);
+    }
     if (re.test(id)) { 
       props.startGame(id, false, player);
     } else {
@@ -23,7 +24,11 @@ function InitialOptions(props) {
   }
 
   const handleSumbitNewGame = (event) => {
-    props.startGame(null, isSinglePlayer, player);
+    props.startGame(null, false, player);
+  }
+
+  const handleSumbitNewGameSingle = (event) => {
+    props.startGame(null, true, player);
   }
 
   return (
@@ -31,30 +36,34 @@ function InitialOptions(props) {
       Player Name:
       <input className={utilStyles.inputBox} type="text" value={player} onChange={(e) => setPlayer(e.target.value)} />
       <br/><br/>Please choose a play option from the following:
-
       <table className={utilStyles.tableStyle}> <tbody>
         <tr>
-        <td>
-          <form className={utilStyles.formStyle} onSubmit={handleSumbitNewGame}>
-          <label> 
-          <input className={utilStyles.inputBox} type="checkbox" value={isSinglePlayer} onChange={(e) => setIsSinglePlayer(e.target.checked)}/>
-          </label> Single Player Mode <br/>
-          <input className={utilStyles.button} type="submit" value="New Game" />
-          </form> 
-        </td> 
-        <th> OR </th>
-        <th>
-          <form className={utilStyles.formStyle} onSubmit={handleSumbitExisting}>
-          <input className={utilStyles.inputBox} type="text" value={gameId} onChange={(e) => setGameId(e.target.value)} /><br/>
-          <input className={utilStyles.button} type="submit" value="Join Existing Game" />
-          </form> 
-        </th> 
+          <th> 
+            <button className={utilStyles.button} onClick={handleSumbitNewGame}>
+              Create New Game
+            </button>
+          </th> 
+        </tr>
+        <tr>
+          <th> 
+            <button className={utilStyles.button} onClick={handleSumbitExisting}>
+              Join Existing Game
+            </button>
+          </th> 
+        </tr>
+        <tr>
+          <th> 
+            <button className={utilStyles.button} onClick={handleSumbitNewGameSingle}>
+              Play Solo
+            </button>
+          </th>
         </tr>
       </tbody></table>
     </div>
     );
 
 }
+
 
 
 export default InitialOptions;
