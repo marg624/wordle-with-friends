@@ -23,6 +23,8 @@ export const getOccurrences = (letter, word) => {
 
 export const evaluation = (index, wordArray, winningWord, winningWordArray) => {
     let letter = wordArray[index]
+
+    console.log("   evaluation: (index) " + index + ", (entered) " + letter + ", (winning) " + winningWordArray[index]);
     // if letter is in the right spot - correct
     if (winningWordArray[index] == letter) {
         return utilStyles.wordBoxCorrect;
