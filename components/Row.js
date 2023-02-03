@@ -8,7 +8,7 @@ import {
 
 
 function Row(props) {
-  const winningWord = props.winningWord;
+  const winningWord = props.winningWord.toUpperCase();
   const winningWordArray = Object.assign([], winningWord);
   const currRowNum = props.rowNum;
   const boardStateReadOnly = props.boardState[currRowNum].readOnly;

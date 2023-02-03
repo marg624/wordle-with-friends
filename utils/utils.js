@@ -46,9 +46,7 @@ export const evaluation = (index, wordArray, winningWord, winningWordArray) => {
 
 export const evaluations = (wordArray, winningWord, winningWordArray) => {
     let evals = ['','','','',''];
-    const word = wordArray.join("");
-    if (word.toLowerCase() == winningWord) {
-    }
+    const word = wordArray.join("").toUpperCase();
 
     let i = 0;
     const state = evals.map((c, index) => {
@@ -67,7 +65,7 @@ export const evaluations = (wordArray, winningWord, winningWordArray) => {
 }
 
 export const isWord = (word) => {
-    return dictionary.words.includes(word.toLowerCase());
+    return dictionary.words.includes(word.toLowerCase()) || dictionary.words.includes(word.toUpperCase());
 }
 
 export const currTurn = (boardStateGuesses) => {
