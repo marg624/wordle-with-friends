@@ -86,7 +86,7 @@ class Board extends React.Component {
       
       for (let i = 0; i < game.guesses.length; i++) {
         let currWordGuess = this.state.boardState[i].guess;
-        let dbGameGuess = game.guesses[i];   
+        let dbGameGuess = game.guesses[i].toUpperCase();   
         // we've already seen the word and evaluated    
         if (currWordGuess != null) {
           if (currWordGuess.toUpperCase() != dbGameGuess.toUpperCase()) {

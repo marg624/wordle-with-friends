@@ -21,15 +21,15 @@
       }
 
       function startGame(gameId, isSinglePlayer, playerName) {
-          let newArr = gameId ? {"gameId":gameId, "winningWord":dictionary.words[gameId], "singlePlayer":isSinglePlayer, "playerName":playerName, "isFirst":false} 
-                              : {"gameId":gameIdCreate, "winningWord":winningWordCreate, "singlePlayer":isSinglePlayer, "playerName":playerName, "isFirst":true};
+          let newArr = gameId ? {"gameId":gameId, "winningWord":dictionary.words[gameId].toUpperCase(), "singlePlayer":isSinglePlayer, "playerName":playerName, "isFirst":false} 
+                              : {"gameId":gameIdCreate, "winningWord":winningWordCreate.toUpperCase(), "singlePlayer":isSinglePlayer, "playerName":playerName, "isFirst":true};
           if (!isSinglePlayer) {
               if (gameId) {
                 // join existing game
                 updateGame(gameId, playerName, null);
               } else {
                 // create game
-                createGame(gameIdCreate, winningWordCreate, playerName);
+                createGame(gameIdCreate, winningWordCreate.toUpperCase(), playerName);
               }
           }
           setInitialState(newArr);
