@@ -59,6 +59,8 @@ export const evaluations = (wordArray, winningWord, winningWordArray) => {
             return c;
         }
     });
+    console.log("evaluation for - " + word);
+    console.log(state);
     return state;
 }
 

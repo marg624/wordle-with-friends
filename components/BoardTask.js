@@ -6,10 +6,7 @@ function BoardTask(props) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      let resp = props.updateStateFunc(props.meFirst);
-      if (resp) {
-        return null;
-      }
+      props.updateStateFunc(props.meFirst);
     }, TIME_MS);
 
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.

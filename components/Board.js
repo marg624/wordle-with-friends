@@ -71,7 +71,11 @@ class Board extends React.Component {
         }
       } else {
         if (this.state.waitingFor != game.player1) {
-          this.state.waitingFor = game.player1;
+          if (game.player1 != null) {
+            this.state.waitingFor = game.player1;
+          } else {
+            this.state.waitingFor = "friend";
+          }
           didChange = true;
         }
       }
