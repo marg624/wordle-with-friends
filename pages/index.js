@@ -35,7 +35,7 @@
           setInitialState(newArr);
       }
 
-      return ( <AlertProvider><div className={utilStyles.center} > 
+      return ( <AlertProvider><div className={utilStyles.center} >  <meta name="viewport" content="width=device-width, initial-scale=1" />
         <span className={utilStyles.left}><button className={utilStyles.noStyle} title="refresh" onClick={newGame}><img src={refresh.src} height="25" /></button> </span> 
         <img src={logo.src} width="160" /> <div className={utilStyles.topLine} /> <br/>
         { initialState && <Board winningWord={initialState["winningWord"]} gameId={initialState["gameId"]} isSinglePlayer={initialState["singlePlayer"]} playerName={initialState["playerName"]}  isFirst={initialState["isFirst"]} /> }

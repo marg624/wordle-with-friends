@@ -32,10 +32,10 @@ function InitialOptions(props) {
   }
 
   return (
-    <div className={utilStyles.center}>Welcome!<br/><br/>
+    <div className={utilStyles.center}><br/>
       Player Name:
       <input className={utilStyles.inputBox} type="text" value={player} onChange={(e) => setPlayer(e.target.value)} />
-      <br/><br/>Please choose a play option from the following:
+      <br/>Please choose a play option from the following:
       <table className={utilStyles.tableStyle}> <tbody>
         <tr>
           <th> 

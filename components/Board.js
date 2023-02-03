@@ -13,6 +13,7 @@ import BoardTask from './BoardTask';
 import Confetti from 'react-confetti'
 import { useAlert } from 'react-alert-with-buttons'
 import { readGame, updateGame, evaluations } from '../utils/utils';
+import { isMobile } from 'react-device-detect';
 
 class Board extends React.Component {
 
@@ -205,12 +206,19 @@ render() {
       player1 = "waiting for a friend ..."
   }
 
+  let showVs = "vs.";
+  if (this.props.isSinglePlayer) {
+    showVs = "";
+  }
+
+  let breakNum = isMobile? 9 : 13;
+
   return (
       <div className={utilStyles.center}> 
         {this.state.win && <Confetti run="false" />}
         Game ID: {this.props.gameId} <br/> <br/>
-        {this.props.isFirst && <span><strong>{player0} (you)</strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vs.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em> {player1} </span>}
-        {!this.props.isFirst && <span>{player0}<strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vs.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em>{player1} (you)</strong></span>}
+        {this.props.isFirst && <span><strong>{player0} (you)</strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em> {player1} </span>}
+        {!this.props.isFirst && <span>{player0}<strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em>{player1} (you)</strong></span>}
 <br/>
         {!this.props.isSinglePlayer  &&  <BoardTask updateStateFunc={this.updateState} meFirst={this.props.isFirst} player0={player0}  player1={player1} /> }
         <Row0 /> 
@@ -224,7 +232,7 @@ render() {
         <br/>
         <div className={utilStyles.center }><br/>
           {Object.keys(this.state.alphabetState).map((key, index) => {
-            let addBreak = (index == 12) ? <br/> : ""
+            let addBreak = ((index+1) % breakNum == 0) ? <br/> : ""
             let state1 = this.state.alphabetState[key]
             return ( 
              <span key={key}>
