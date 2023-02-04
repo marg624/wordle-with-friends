@@ -115,7 +115,7 @@ class Board extends React.Component {
               alert("You lose to " + p + "! The word was " + this.props.winningWord.toUpperCase())
             }
             return true;
-          } else if (i > 5) {
+          } else if (i >= 5) {
             alert("Both players lose! The word was " + this.props.winningWord.toUpperCase());
             return true;
           } else {
@@ -137,15 +137,13 @@ class Board extends React.Component {
     this.state.boardState[currRow].guess = guessedWord;
     this.state.boardState[currRow].evaluation = evaluationWord;
 
-    console.log(evaluationWord);
-
     this.alphaHelper(guessedWord.toUpperCase(), evaluationWord);
 
     let correct = utilStyles.wordBoxCorrect;
     if (evaluationWord[0] == correct && evaluationWord[1] == correct && evaluationWord[2] == correct && evaluationWord[3] == correct && evaluationWord[4] == correct) {
       this.state.win = true;
       this.setState(this.state);
-      alert("Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + rowNum + " tries.")
+      // alert("Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + rowNum + " tries.")
     } else if (nextRow < 6) {
       if (this.state.isSinglePlayer) {
        this.state.boardState[nextRow].readOnly = false;
