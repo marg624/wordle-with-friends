@@ -129,7 +129,7 @@ class Board extends React.Component {
             }
             return true;
           } else if (i >= 5) {
-            this.state.win = true;
+            this.state.win = false;
             this.state.gameOver = true;
             this.state.gameOverMsg = "Both players lose! The word was " + this.props.winningWord.toUpperCase();
             this.setState(this.state);
