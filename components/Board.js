@@ -137,6 +137,8 @@ class Board extends React.Component {
     this.state.boardState[currRow].guess = guessedWord;
     this.state.boardState[currRow].evaluation = evaluationWord;
 
+    console.log(evaluationWord);
+
     this.alphaHelper(guessedWord.toUpperCase(), evaluationWord);
 
     let correct = utilStyles.wordBoxCorrect;

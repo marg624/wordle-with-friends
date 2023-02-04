@@ -22,7 +22,9 @@ export const getOccurrences = (letter, word) => {
 }
 
 export const evaluation = (index, wordArray, winningWord, winningWordArray) => {
-    let letter = wordArray[index]
+    let letter = wordArray[index].toUpperCase();
+    //console.log("compare/evealuate: (input) " + letter + ", (winningWord) " + winningWordArray[index]);
+
     // if letter is in the right spot - correct
     if (winningWordArray[index] == letter) {
         return utilStyles.wordBoxCorrect;
@@ -58,6 +60,8 @@ export const evaluations = (wordArray, winningWord, winningWordArray) => {
         }
     });
 
+ //   console.log("evaluations: ");
+ //   console.log(state);
     return state;
 }
 
@@ -111,14 +115,21 @@ export const createGame = async (gameId, word, player) => {
 
 export const updateGame = (gameId, playerName, guessedWord) => {
     let resp = true;
+    if (guessedWord != null) {
+        guessedWord = guessedWord.toUpperCase();
+    }
+  //  console.log("updateGame: " + guessedWord);
     updateGameHelper(gameId, playerName, guessedWord)
     .then(
         (response) => {
+           // console.log(response.content.S);
             resp = true;
         })
     .catch((err) => {
+        console.log(err);
         resp = false;
-    });  
+    });
+  //  console.log(resp);  
     return resp;
 }
 
