@@ -132,6 +132,11 @@
     border: 2px solid green;
   }
 
+  .wordBoxMultiLost {
+    background-color: darkred;
+    border: 2px solid darkred;
+  }
+
   .wordNotValidShake {
     animation: shake 600ms 1;
   }

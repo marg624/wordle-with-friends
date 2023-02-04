@@ -11,7 +11,6 @@ import {
 import Row from './Row';
 import BoardTask from './BoardTask';
 import Confetti from 'react-confetti'
-import { useAlert } from 'react-alert-with-buttons'
 import { readGame, updateGame, evaluations } from '../utils/utils';
 import { isMobile } from 'react-device-detect';
 
@@ -41,7 +40,7 @@ class Board extends React.Component {
     } else {
       player11 = playerName1;
     }
-    this.state = {boardState: boardState1, alphabetState:alphabetState1, win:win1, isSinglePlayer:isSinglePlayer1, winningWord: winningWord1, playerName: playerName1, gameId: gameId1, isFirst: isFirst1, player0:player01, player1:player11, waitingFor:""};
+    this.state = {boardState: boardState1, alphabetState:alphabetState1, gameOverMsg:null, gameOver:false, win:win1, isSinglePlayer:isSinglePlayer1, winningWord: winningWord1, playerName: playerName1, gameId: gameId1, isFirst: isFirst1, player0:player01, player1:player11, waitingFor:""};
     this.focusNext = this.focusNext.bind(this);
     this.updateState = this.updateState.bind(this);
     this.alphaHelper = this.alphaHelper.bind(this);
@@ -104,19 +103,37 @@ class Board extends React.Component {
               // check if it was my guess
             if (i % 2 == 0 && meFirst) { 
               this.state.win = true;
-              this.setState(this.state);
+              this.state.gameOver = true;
               let tries = i+1;
-              alert("Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + tries + " tries.")  
+              this.state.gameOverMsg = "Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + tries + " tries.";
+              this.setState(this.state);
+              
+             // alert("Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + tries + " tries.")  
             } else {
+              
               let p = game.player1;
               if (meFirst) {
                 p = game.player0;
               }
-              alert("You lose to " + p + "! The word was " + this.props.winningWord.toUpperCase())
+             // alert("You lose to " + p + "! The word was " + this.props.winningWord.toUpperCase())
+              this.state.win = false;
+              this.state.gameOver = true;
+              evaluationWord[0] = utilStyles.wordBoxMultiLost;
+              evaluationWord[1] = utilStyles.wordBoxMultiLost;
+              evaluationWord[2] = utilStyles.wordBoxMultiLost;
+              evaluationWord[3] = utilStyles.wordBoxMultiLost;
+              evaluationWord[4] = utilStyles.wordBoxMultiLost;
+              this.state.boardState[i].evaluation = evaluationWord;
+              this.state.gameOverMsg = "You lose to " + p + "! The word was " + this.props.winningWord.toUpperCase();
+              this.setState(this.state);
             }
             return true;
           } else if (i >= 5) {
-            alert("Both players lose! The word was " + this.props.winningWord.toUpperCase());
+            this.state.win = true;
+            this.state.gameOver = true;
+            this.state.gameOverMsg = "Both players lose! The word was " + this.props.winningWord.toUpperCase();
+            this.setState(this.state);
+            //alert("Both players lose! The word was " + this.props.winningWord.toUpperCase());
             return true;
           } else {
             return false;
@@ -141,16 +158,20 @@ class Board extends React.Component {
 
     let correct = utilStyles.wordBoxCorrect;
     if (evaluationWord[0] == correct && evaluationWord[1] == correct && evaluationWord[2] == correct && evaluationWord[3] == correct && evaluationWord[4] == correct) {
-      this.state.win = true;
-      this.setState(this.state);
-      // alert("Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + rowNum + " tries.")
+       this.state.win = true;
+       this.state.gameOver = true;
+       this.state.gameOverMsg = "Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + rowNum + " tries.";
+       this.setState(this.state);
     } else if (nextRow < 6) {
       if (this.state.isSinglePlayer) {
        this.state.boardState[nextRow].readOnly = false;
       }
       this.setState(this.state);
     } else {
-      alert("You lose! The word was " + this.props.winningWord.toUpperCase())
+       this.state.win = false;
+       this.state.gameOver = true;
+       this.state.gameOverMsg = "You lose! The word was " + this.props.winningWord.toUpperCase();
+       this.setState(this.state);
     }
     
 }
@@ -222,7 +243,8 @@ render() {
   }
 
   let breakNum = isMobile? 9 : 13;
-
+  let displayTurn = !this.props.isSinglePlayer && (this.state.gameOver != true);
+  let doTask = !this.props.isSinglePlayer && (this.state.gameOver != true);
 
   return (
       <div className={utilStyles.center}> 
@@ -232,7 +254,7 @@ render() {
         {this.props.isFirst && <span><strong>{player0}</strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em> {player1} </span>}
         {!this.props.isFirst && <span>{player0}<strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em>{player1}</strong></span>}
 <br/>
-        {!this.props.isSinglePlayer  &&  <BoardTask updateStateFunc={this.updateState} meFirst={this.props.isFirst} player0={player0}  player1={player1} /> }
+        {doTask &&  <BoardTask updateStateFunc={this.updateState} meFirst={this.props.isFirst} player0={player0}  player1={player1} /> }
         <Row0 /> 
         <Row1 />
         <Row2 /> 
@@ -240,7 +262,8 @@ render() {
         <Row4 />
         <Row5 /> 
         <br/>
-        {!this.props.isSinglePlayer  &&  <em><br/>{this.state.waitingFor}'s turn... </em>}
+        {displayTurn  &&  <em><br/>{this.state.waitingFor}'s turn... </em>}
+        {this.state.gameOver  &&  <strong><br/>{this.state.gameOverMsg}</strong>}
         <br/>
         <div className={utilStyles.center }><br/>
           {Object.keys(this.state.alphabetState).map((key, index) => {
