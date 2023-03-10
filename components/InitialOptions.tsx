@@ -39,7 +39,7 @@ function InitialOptions(props) {
        <br/> Please choose a play option from the following: <br/> 
 
       <div className="flex justify-center">
-      <table className={utilStyles.tableStyle} class="border-spacing-3"> <tbody>
+      <table className={utilStyles.tableStyle}> <tbody>
         <tr>
           <th className="text-center justify-between">  <br/> [ w/ friends ] <br/> 
             <button className={utilStyles.button} onClick={handleSumbitNewGame}>
