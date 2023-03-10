@@ -4,7 +4,7 @@ import Layout from '../components/layout'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import React, {useState} from 'react';
-
+import StartGame from '../components/start-game'
 import utilStyles from '../styles/utils.module.css';
 import dictionary from '../resources/5-letter-words.js';
 import Board from '../components/Board';
@@ -21,6 +21,7 @@ const winningWordCreate = dictionary.words[gameIdCreate];
 export default function Index() {
 
   const [initialState, setInitialState] = useState(null);
+  const [ready, setReady] = useState(false);
 
 
   function startGame(gameId, isSinglePlayer, playerName) {
@@ -38,6 +39,10 @@ export default function Index() {
       setInitialState(newArr);
   }
 
+  function hitReady() {
+    setReady(true)
+  }
+
   return (
     <>
       <Layout>
@@ -46,8 +51,9 @@ export default function Index() {
         </Head>
         <Container>
           <Intro />
-          { initialState && <Board winningWord={initialState["winningWord"]} gameId={initialState["gameId"]} isSinglePlayer={initialState["singlePlayer"]} playerName={initialState["playerName"]}  isFirst={initialState["isFirst"]} /> }
-          { !initialState && <InitialOptions startGame={startGame} /> }
+          { (ready && initialState) && <Board winningWord={initialState["winningWord"]} gameId={initialState["gameId"]} isSinglePlayer={initialState["singlePlayer"]} playerName={initialState["playerName"]}  isFirst={initialState["isFirst"]} /> }
+          { (ready && !initialState) && <InitialOptions startGame={startGame} /> }
+          { !ready && <StartGame onClick={hitReady} /> }
         </Container>
       </Layout>
     </>

@@ -34,31 +34,36 @@ function InitialOptions(props) {
   return (
     <div className={utilStyles.center}><br/>
       Player Name:
+      
       <input className={utilStyles.inputBox} type="text" value={player} onChange={(e) => setPlayer(e.target.value)} />
-      <br/>Please choose a play option from the following:
-      <table className={utilStyles.tableStyle}> <tbody>
+       <br/> Please choose a play option from the following: <br/> 
+
+      <div className="flex justify-center">
+      <table className={utilStyles.tableStyle} class="border-spacing-3"> <tbody>
         <tr>
-          <th> 
+          <th className="text-center justify-between">  <br/> [ w/ friends ] <br/> 
             <button className={utilStyles.button} onClick={handleSumbitNewGame}>
               Create New Game
-            </button>
-          </th> 
-        </tr>
-        <tr>
-          <th> 
+            </button> 
             <button className={utilStyles.button} onClick={handleSumbitExisting}>
               Join Existing Game
             </button>
           </th> 
+        </tr>  
+        <tr>
+          <th className="text-center justify-between"> 
+            <br/>  <em>OR </em> <br/> 
+          </th> 
         </tr>
         <tr>
-          <th> 
+          <th className="text-center justify-between">  <br/> [ alone ] <br/> 
             <button className={utilStyles.button} onClick={handleSumbitNewGameSingle}>
               Play Solo
             </button>
           </th>
-        </tr>
+          </tr>
       </tbody></table>
+      </div>
     </div>
     );
 
