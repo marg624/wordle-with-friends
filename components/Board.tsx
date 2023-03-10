@@ -14,12 +14,44 @@ import Confetti from 'react-confetti'
 import { readGame, updateGame, evaluations } from '../utils/utils';
 import { isMobile } from 'react-device-detect';
 
-class Board extends React.Component {
+interface Props {
+  winningWord: string,
+  gameId: string,
+  isSinglePlayer: boolean,
+  playerName: string,
+  isFirst: boolean
+};
 
-  constructor(props) {
+interface BoardState {
+  [key: number]: {
+    readOnly: boolean;
+    guess: any;
+    evaluation: any;
+  };
+};
+
+interface GuessState {
+  boardState: BoardState,
+  alphabetState: any,
+  gameOverMsg?: string,
+  gameOver: boolean,
+  win: boolean,
+  isSinglePlayer: boolean,
+  winningWord: string,
+  playerName: string,
+  gameId: string,
+  isFirst: boolean,
+  player0?: string,
+  player1?: string,
+  waitingFor?: string
+};
+
+class Board extends React.Component<Props, GuessState>  {
+
+  constructor(props: Props) {
     super(props);
     const boardState1 = {
-      0: {readOnly: !this.props.isFirst, guess: null, evaluation: null},
+      0: {readOnly: !props.isFirst, guess: null, evaluation: null},
       1: {readOnly: true, guess: null, evaluation: null},
       2: {readOnly: true, guess: null, evaluation: null},
       3: {readOnly: true, guess: null, evaluation: null},
@@ -28,11 +60,11 @@ class Board extends React.Component {
     };
     let alphabetState1 = {"A": "", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":"", "I":"", "J":"", "K":"", "L":"", "M":"", "N":"", "O":"", "P":"", "Q":"", "R":"", "S":"", "T":"", "U":"", "V":"", "W":"", "X":"", "Y":"", "Z":""};
     let win1 = false
-    let isSinglePlayer1 = this.props.isSinglePlayer;
-    let winningWord1 = this.props.winningWord;
-    let playerName1 = this.props.playerName;
-    let gameId1 = this.props.gameId;
-    let isFirst1 = this.props.isFirst;
+    let isSinglePlayer1 = props.isSinglePlayer;
+    let winningWord1 = props.winningWord;
+    let playerName1 = props.playerName;
+    let gameId1 = props.gameId;
+    let isFirst1 = props.isFirst;
     let player01 = null;
     let player11 = null;
     if (isFirst1) {
@@ -53,34 +85,35 @@ class Board extends React.Component {
       if (game == null) {return false;}
 
       let didChange = false;
+      let newState = Object.assign(this.state);
       if (this.state.player0 == null && game.player0 != null) {
-        this.state.player0 = game.player0;
+        newState = Object.assign(newState, { player0: game.player0 });
         didChange = true;
       }
 
       if (this.state.player1 == null && game.player1 != null) {
-        this.state.player1 = game.player1;
+        newState = Object.assign(newState, { player1: game.player1 });
         didChange = true;
       }
 
       if ((game.guesses.length) % 2 == 0) { 
         if (this.state.waitingFor != game.player0) {
-          this.state.waitingFor = game.player0;
+          newState = Object.assign(newState, { waitingFor: game.player0 });
           didChange = true;
         }
       } else {
         if (this.state.waitingFor != game.player1) {
           if (game.player1 != null) {
-            this.state.waitingFor = game.player1;
+            newState = Object.assign(newState, { waitingFor: game.player1 });
           } else {
-            this.state.waitingFor = "friend";
+            newState = Object.assign(newState, { waitingFor: "friend" });
           }
           didChange = true;
         }
       }
 
       if (didChange) {
-        this.setState(this.state);
+        this.setState(newState);
       }
       
       for (let i = 0; i < game.guesses.length; i++) {
@@ -93,47 +126,44 @@ class Board extends React.Component {
           } 
         // there's a guessed word that isn't in our state
         } else {
-          this.state.boardState[i].guess = dbGameGuess;
+          let newBoardState = Object.assign(this.state.boardState)
+          newBoardState[i].guess = dbGameGuess;
           let evaluationWord = evaluations(Object.assign([], dbGameGuess), this.state.winningWord, Object.assign([], this.state.winningWord)); 
-          this.state.boardState[i].evaluation = evaluationWord;
+          newBoardState[i].evaluation = evaluationWord;
+          newState = Object.assign(newState, {boardState: newBoardState})
+
           this.alphaHelper(dbGameGuess.toUpperCase(), evaluationWord);
 
           let correct = utilStyles.wordBoxCorrect;
           if (evaluationWord[0] == correct && evaluationWord[1] == correct && evaluationWord[2] == correct && evaluationWord[3] == correct && evaluationWord[4] == correct) {
               // check if it was my guess
             if (i % 2 == 0 && meFirst) { 
-              this.state.win = true;
-              this.state.gameOver = true;
               let tries = i+1;
-              this.state.gameOverMsg = "Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + tries + " tries.";
-              this.setState(this.state);
-              
-             // alert("Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + tries + " tries.")  
+              let newGameOverMsg = "Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + tries + " tries.";
+              newState = Object.assign(newState, { win: true }, { gameOver: true }, {gameOverMsg: newGameOverMsg});
             } else {
               
               let p = game.player1;
               if (meFirst) {
                 p = game.player0;
               }
-             // alert("You lose to " + p + "! The word was " + this.props.winningWord.toUpperCase())
-              this.state.win = false;
-              this.state.gameOver = true;
+
               evaluationWord[0] = utilStyles.wordBoxMultiLost;
               evaluationWord[1] = utilStyles.wordBoxMultiLost;
               evaluationWord[2] = utilStyles.wordBoxMultiLost;
               evaluationWord[3] = utilStyles.wordBoxMultiLost;
               evaluationWord[4] = utilStyles.wordBoxMultiLost;
-              this.state.boardState[i].evaluation = evaluationWord;
-              this.state.gameOverMsg = "You lose to " + p + "! The word was " + this.props.winningWord.toUpperCase();
-              this.setState(this.state);
+              let newBoardState = Object.assign(this.state.boardState)
+              newBoardState[i].evaluation = evaluationWord;
+              let newGameOverMsg = "You lose to " + p + "! The word was " + this.props.winningWord.toUpperCase();
+              newState = Object.assign(newState, {boardState: newBoardState}, { win: false }, { gameOver: true }, {gameOverMsg: newGameOverMsg});
             }
+            this.setState(newState);
             return true;
           } else if (i >= 5) {
-            this.state.win = false;
-            this.state.gameOver = true;
-            this.state.gameOverMsg = "Both players lose! The word was " + this.props.winningWord.toUpperCase();
-            this.setState(this.state);
-            //alert("Both players lose! The word was " + this.props.winningWord.toUpperCase());
+            let newGameOverMsg = "Both players lose! The word was " + this.props.winningWord.toUpperCase();
+            newState = Object.assign(newState, { win: false }, { gameOver: true }, {gameOverMsg: newGameOverMsg});
+            this.setState(newState);
             return true;
           } else {
             return false;
@@ -149,30 +179,30 @@ class Board extends React.Component {
     let currRow = rowNum; 
     rowNum++; 
     let nextRow = rowNum;
-    let newArr = { ... this.state.boardState };
-    this.state.boardState[currRow].readOnly = true;
-    this.state.boardState[currRow].guess = guessedWord;
-    this.state.boardState[currRow].evaluation = evaluationWord;
+    
+    let newBoardState = { ... this.state.boardState };
+    newBoardState[currRow].readOnly = true;
+    newBoardState[currRow].guess = guessedWord;
+    newBoardState[currRow].evaluation = evaluationWord;
+
+    let newState = Object.assign(this.state, {boardState: newBoardState})
 
     this.alphaHelper(guessedWord.toUpperCase(), evaluationWord);
 
     let correct = utilStyles.wordBoxCorrect;
     if (evaluationWord[0] == correct && evaluationWord[1] == correct && evaluationWord[2] == correct && evaluationWord[3] == correct && evaluationWord[4] == correct) {
-       this.state.win = true;
-       this.state.gameOver = true;
-       this.state.gameOverMsg = "Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + rowNum + " tries.";
-       this.setState(this.state);
+       let newGameOverMsg = "Congrats, you win!\nYou guessed " + this.props.winningWord.toUpperCase() + " in " + rowNum + " tries.";
+       newState = Object.assign(newState, { win: true }, { gameOver: true }, {gameOverMsg: newGameOverMsg});
     } else if (nextRow < 6) {
       if (this.state.isSinglePlayer) {
-       this.state.boardState[nextRow].readOnly = false;
+       newBoardState[nextRow].readOnly = false;
+       newState = Object.assign(newState, {boardState: newBoardState})
       }
-      this.setState(this.state);
     } else {
-       this.state.win = false;
-       this.state.gameOver = true;
-       this.state.gameOverMsg = "You lose! The word was " + this.props.winningWord.toUpperCase();
-       this.setState(this.state);
+       let newGameOverMsg =  "You lose! The word was " + this.props.winningWord.toUpperCase();
+       newState = Object.assign(newState, { win: false }, { gameOver: true }, {gameOverMsg: newGameOverMsg});
     }
+    this.setState(newState);
     
 }
 
@@ -195,8 +225,8 @@ alphaHelper(guessedWord, evaluationWord) {
       newArr2[letter] = evaluation;
     }
   }
-  this.state.alphabetState = newArr2;
-  this.setState(this.state);
+  let newState = Object.assign(this.state, {alphabetState: newArr2})
+  this.setState(newState);
 }
 
 
@@ -212,17 +242,17 @@ render() {
   }
 
   const Row0 = forwardRef((props, ref) => (
-    <Row rowNum="0" ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={even} isSinglePlayer={this.props.isSinglePlayer} /> ));
+    <Row rowNum={0} ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={even} isSinglePlayer={this.props.isSinglePlayer} /> ));
   const Row1 = forwardRef((props, ref) => (
-    <Row rowNum="1" ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={odd} isSinglePlayer={this.props.isSinglePlayer}  /> ));
+    <Row rowNum={1} ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={odd} isSinglePlayer={this.props.isSinglePlayer}  /> ));
   const Row2 = forwardRef((props, ref) => (
-    <Row rowNum="2" ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={even} isSinglePlayer={this.props.isSinglePlayer}  /> ));
+    <Row rowNum={2} ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={even} isSinglePlayer={this.props.isSinglePlayer}  /> ));
   const Row3 = forwardRef((props, ref) => (
-    <Row rowNum="3" ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={odd} isSinglePlayer={this.props.isSinglePlayer}  /> ));
+    <Row rowNum={3} ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={odd} isSinglePlayer={this.props.isSinglePlayer}  /> ));
   const Row4 = forwardRef((props, ref) => (
-    <Row rowNum="4" ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={even} isSinglePlayer={this.props.isSinglePlayer}  /> ));
+    <Row rowNum={4} ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={even} isSinglePlayer={this.props.isSinglePlayer}  /> ));
   const Row5 = forwardRef((props, ref) => (
-    <Row rowNum="5" ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={odd} isSinglePlayer={this.props.isSinglePlayer}  /> ));   
+    <Row rowNum={5} ref={ref} gameId={this.props.gameId} winningWord={this.props.winningWord} boardState={this.state.boardState} updateStateFunc={this.updateState} focusNextFunc={this.focusNext} myName={this.props.playerName} isMyTurn={odd} isSinglePlayer={this.props.isSinglePlayer}  /> ));   
 
   let player0 = this.state.player0;
   let player1 = this.state.player1;
@@ -248,7 +278,7 @@ render() {
 
   return (
       <div className={utilStyles.center}> 
-        {this.state.win && <Confetti run="false" />}
+        {this.state.win && <Confetti run={false} />}
 
         {!this.props.isSinglePlayer  &&  <span>Game ID: {this.props.gameId} <br/> <br/></span>}
         {this.props.isFirst && <span><strong>{player0}</strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em> {player1} </span>}

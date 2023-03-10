@@ -1,0 +1,513 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"con",
+				"console"
+			],
+			[
+				"is",
+				"isFirst"
+			],
+			[
+				"pl",
+				"playerName1"
+			],
+			[
+				"curr",
+				"currResp"
+			],
+			[
+				"wa",
+				"waitingFor"
+			],
+			[
+				"to",
+				"toUpperCase"
+			],
+			[
+				"up",
+				"updateState"
+			],
+			[
+				"eval",
+				"evalHelper"
+			],
+			[
+				"res",
+				"dataResp"
+			],
+			[
+				"read",
+				"readGame"
+			],
+			[
+				"play",
+				"playerName"
+			],
+			[
+				"win",
+				"winningWordCreate"
+			],
+			[
+				"gameI",
+				"gameIdCreate"
+			],
+			[
+				"gu",
+				"guess"
+			],
+			[
+				"wn",
+				"winningWord1"
+			],
+			[
+				"w",
+				"winningWord"
+			],
+			[
+				"new",
+				"newArr2"
+			],
+			[
+				"a",
+				"alphabetState"
+			],
+			[
+				"al",
+				"alphabetState"
+			],
+			[
+				"url",
+				"urlWrite"
+			],
+			[
+				"newA",
+				"newArr"
+			],
+			[
+				"width",
+				"max-width"
+			],
+			[
+				"isK",
+				"isKeyDown"
+			],
+			[
+				"cur",
+				"currRowNum"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"e",
+				"existingEvaluation"
+			],
+			[
+				"set",
+				"setAlphabetState"
+			],
+			[
+				"ev",
+				"evaluation"
+			],
+			[
+				"font-",
+				"font-family"
+			],
+			[
+				"ut",
+				"utilStyles"
+			],
+			[
+				"lett",
+				"letterOccur"
+			],
+			[
+				"get",
+				"getOccurrences"
+			],
+			[
+				"gue",
+				"guessedWord"
+			],
+			[
+				"row",
+				"rowNum"
+			],
+			[
+				"gues",
+				"guessedWord"
+			],
+			[
+				"ro",
+				"rowNum"
+			],
+			[
+				"re",
+				"refNext"
+			],
+			[
+				"use",
+				"useState"
+			],
+			[
+				"cu",
+				"current"
+			],
+			[
+				"winn",
+				"winningWordArray"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"word",
+				"wordBoxCorrect"
+			],
+			[
+				"setEva",
+				"setEvalArray0"
+			],
+			[
+				"eva",
+				"evals"
+			],
+			[
+				"yellow",
+				"lightgoldenrodyellow"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"te",
+				"textArray"
+			],
+			[
+				"k",
+				"key"
+			],
+			[
+				"he",
+				"height"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"reindent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"",
+				"Arithmetic"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"install package",
+				"Install Package Control"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 91.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/pages/index.js.new.test",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/pages/api/games.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/pages/index.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/utils/utils.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/components/Board.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/components/BoardTask.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/components/InitialOptions.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/README.md",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/styles/utils.module.css",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/styles/global.css",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/components/Board copy.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/components/BoardManager.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/package-lock.json",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/tests/index_old.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/containers/row.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/tests/index.test.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/tests/index.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/package.json",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/resources/words.txt",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/resources/5-letter-words.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/components/Counter.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/components/Letter.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/containers/counter.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/containers/word.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/components/Clock.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/containers/clock.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/pages/about.js",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/pages/day/index.tsx",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/pages/about.tsx",
+		"/Users/mmiranda/Desktop/wordle/wordle-with-friends/pages/index.tsx",
+		"/Users/mmiranda/Desktop/nextjs-blog/lib/posts.js",
+		"/Users/mmiranda/Desktop/nextjs-blog/pages/posts/[id].js",
+		"/Users/mmiranda/Desktop/nextjs-blog/pages/api/hello.js",
+		"/Users/mmiranda/Desktop/jobs/story",
+		"/Users/mmiranda/Desktop/personal/journal/10.06.22",
+		"/Users/mmiranda/Desktop/jobs/questions_for_me",
+		"/Users/mmiranda/Desktop/jobs/studying/Instagram.txt",
+		"/Users/mmiranda/Desktop/personal/journal/08.29.22",
+		"/Users/mmiranda/Desktop/personal/journal/08.26.22",
+		"/Users/mmiranda/Desktop/jobs/Platform: in-house tools for artists. Asset system",
+		"/Users/mmiranda/Desktop/jobs/fears",
+		"/Users/mmiranda/Desktop/jobs/job_listings",
+		"/Users/mmiranda/my-app/build/index.html",
+		"/Users/mmiranda/my-app/src/App.js",
+		"/Users/mmiranda/Desktop/Kayla/index.html",
+		"/Users/mmiranda/Downloads/wordle/www.nytimes.com/games/wordle/index.html",
+		"/Users/mmiranda/Desktop/personal/journal/02.15.22",
+		"/Users/mmiranda/Desktop/personal/journal/02.01.22",
+		"/Users/mmiranda/Desktop/personal/journal/02.02.22",
+		"/Users/mmiranda/Desktop/personal/journal/ideas/Boo Boo",
+		"/Users/mmiranda/Desktop/personal/journal/02.03.22",
+		"/Users/mmiranda/Desktop/personal/journal/02.07.22",
+		"/Users/mmiranda/Desktop/personal/journal/02.11.22",
+		"/Users/mmiranda/Desktop/personal/journal/02.14.22",
+		"/Users/mmiranda/Desktop/personal/journal/The story of my time off",
+		"/Users/mmiranda/Desktop/personal/journal/01.28.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.31.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.29.22",
+		"/Users/mmiranda/Desktop/personal/journal/ideas/Colors",
+		"/Users/mmiranda/Desktop/personal/journal/01.27.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.26.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.09.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.11.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.12.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.13.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.03.21",
+		"/Users/mmiranda/Desktop/personal/journal/01.05.21",
+		"/Users/mmiranda/Desktop/personal/journal/01.02.22",
+		"/Users/mmiranda/Desktop/personal/journal/01.01.22",
+		"/Users/mmiranda/Desktop/personal/journal/12.31.21",
+		"/Users/mmiranda/Desktop/personal/journal/04.13.21",
+		"/Users/mmiranda/Desktop/personal/journal/04.06.21",
+		"/Users/mmiranda/Desktop/personal/journal/04.12.21",
+		"/Users/mmiranda/Desktop/personal/journal/04.21.21",
+		"/Users/mmiranda/Desktop/personal/journal/04.01.21",
+		"/Users/mmiranda/Desktop/personal/journal/03.24.21",
+		"/Users/mmiranda/Desktop/personal/journal/03.08.21",
+		"/Users/mmiranda/Desktop/personal/journal/03.09.21",
+		"/Users/mmiranda/Desktop/personal/journal/03.10.21",
+		"/Users/mmiranda/Desktop/personal/journal/02.25.21",
+		"/Users/mmiranda/Desktop/personal/journal/02.24.21",
+		"/Users/mmiranda/Desktop/personal/journal/AR - augmented reality",
+		"/Users/mmiranda/Desktop/personal/journal/12.17.21",
+		"/Users/mmiranda/Desktop/personal/journal/12.15.21",
+		"/Users/mmiranda/Desktop/personal/journal/12.16.21",
+		"/Users/mmiranda/Desktop/personal/journal/chooseyourownadventure.txt",
+		"/Users/mmiranda/Desktop/personal/journal/12.09.21",
+		"/Users/mmiranda/Desktop/VMware/notes.txt",
+		"/Users/mmiranda/Desktop/personal/journal/12.13.21",
+		"/Users/mmiranda/Desktop/personal/journal/12.14.21",
+		"/Users/mmiranda/seed.txt",
+		"/Users/mmiranda/Desktop/travel/Schwabach.txt",
+		"/Users/mmiranda/Desktop/travel/Bern.txt",
+		"/Users/mmiranda/Desktop/travel/Munich.txt",
+		"/Users/mmiranda/Desktop/travel/Montreux.txt",
+		"/Users/mmiranda/Desktop/travel/Geneva.txt",
+		"/Users/mmiranda/Desktop/travel/Nice.txt",
+		"/Users/mmiranda/Desktop/travel/Avignon.txt",
+		"/Users/mmiranda/Desktop/travel/Paris.txt",
+		"/Users/mmiranda/Desktop/travel/Frankfurt.txt",
+		"/Users/mmiranda/Desktop/opencv-tutorial/read.py",
+		"/Users/mmiranda/Desktop/opencv-tutorial/rescale.py",
+		"/Users/mmiranda/Desktop/opencv-tutorial/draw.py",
+		"/Users/mmiranda/Library/Application Support/Sublime Text/Packages/User/SublimeREPL.sublime-settings",
+		"/Users/mmiranda/Desktop/test.py",
+		"/Users/mmiranda/Library/Application Support/Sublime Text/Packages/User/LSP-pylsp.sublime-settings",
+		"/Users/mmiranda/Library/Application Support/Sublime Text/Packages/User/Python_RUN.sublime-build",
+		"/Users/mmiranda/Library/Application Support/Sublime Text/Packages/User/pyrepl.sublime-build",
+		"/Users/mmiranda/Library/Application Support/Sublime Text/Packages/LSP-pylsp/LSP-pylsp.sublime-settings",
+		"/Users/mmiranda/Library/Application Support/Sublime Text/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/mmiranda/Library/Application Support/Sublime Text/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/mmiranda/Desktop/personal/journal/06.30.21",
+		"/Users/mmiranda/Desktop/personal/journal/06.09.21",
+		"/Users/mmiranda/Desktop/personal/journal/06.08.21",
+		"/Users/mmiranda/Desktop/personal/journal/05.10.21"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 36.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.LSP Log Panel":
+	{
+		"height": 0.0
+	},
+	"output.diagnostics":
+	{
+		"height": 108.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/Python_RUN.sublime-build",
+	"project": "tsconfig.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"read.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 87.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

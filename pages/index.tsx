@@ -1,0 +1,57 @@
+import Container from '../components/container'
+import Intro from '../components/intro'
+import Layout from '../components/layout'
+import Head from 'next/head'
+import { CMS_NAME } from '../lib/constants'
+import React, {useState} from 'react';
+
+import utilStyles from '../styles/utils.module.css';
+import dictionary from '../resources/5-letter-words.js';
+import Board from '../components/Board';
+import InitialOptions from '../components/InitialOptions';
+import logo from '../resources/logo.png';
+import refresh from '../resources/refresh.png';
+import { readGame, createGame, updateGame } from '../utils/utils';
+import * as uuid from 'uuid';
+
+
+const gameIdCreate = Math.floor(Math.random() * 5758);
+const winningWordCreate = dictionary.words[gameIdCreate];
+
+export default function Index() {
+
+  const [initialState, setInitialState] = useState(null);
+
+
+  function startGame(gameId, isSinglePlayer, playerName) {
+      let newArr = gameId ? {"gameId":gameId, "winningWord":dictionary.words[gameId].toUpperCase(), "singlePlayer":isSinglePlayer, "playerName":playerName, "isFirst":false} 
+                          : {"gameId":gameIdCreate, "winningWord":winningWordCreate.toUpperCase(), "singlePlayer":isSinglePlayer, "playerName":playerName, "isFirst":true};
+      if (!isSinglePlayer) {
+          if (gameId) {
+            // join existing game
+            updateGame(gameId, playerName, null);
+          } else {
+            // create game
+            createGame(gameIdCreate, winningWordCreate.toUpperCase(), playerName);
+          }
+      }
+      setInitialState(newArr);
+  }
+
+  return (
+    <>
+      <Layout>
+        <Head>
+          <title>IMDB w/ friends</title>
+        </Head>
+        <Container>
+          <Intro />
+          { initialState && <Board winningWord={initialState["winningWord"]} gameId={initialState["gameId"]} isSinglePlayer={initialState["singlePlayer"]} playerName={initialState["playerName"]}  isFirst={initialState["isFirst"]} /> }
+          { !initialState && <InitialOptions startGame={startGame} /> }
+        </Container>
+      </Layout>
+    </>
+    )
+}
+
+
