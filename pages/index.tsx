@@ -13,6 +13,7 @@ import logo from '../resources/logo.png';
 import refresh from '../resources/refresh.png';
 import { readGame, createGame, updateGame } from '../utils/utils';
 import * as uuid from 'uuid';
+import OptionsButton from '../components/options-button'
 
 
 const gameIdCreate = Math.floor(Math.random() * 5758);
@@ -54,6 +55,7 @@ export default function Index() {
           { (ready && initialState) && <Board winningWord={initialState["winningWord"]} gameId={initialState["gameId"]} isSinglePlayer={initialState["singlePlayer"]} playerName={initialState["playerName"]}  isFirst={initialState["isFirst"]} /> }
           { (ready && !initialState) && <InitialOptions startGame={startGame} /> }
           { !ready && <StartGame onClick={hitReady} /> }
+          <OptionsButton />
         </Container>
       </Layout>
     </>

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import arrow from '../public/assets/arrow-icon.png';
 import mainImage from '../public/assets/cover.png';
+import playImage from '../public/assets/play.png';
 
 type Props = {
     onClick: React.MouseEventHandler<HTMLButtonElement>
@@ -12,10 +13,23 @@ const StartGame = ({
 
   return (
     <div className="flex justify-center" >
-      <h3 className="text-3xl mb-3 leading-snug">
-      <button onClick={onClick} className="hover:text-gray-700"> <img src={mainImage.src} width="100%"/> [ May luck be in your favor ] </button>
-      </h3>
-    </div>
+      <h1 className="text-7xl mb-4 leading-snug">
+        <img src={mainImage.src} width="100%" className="opacity-100" /> 
+        <div className="bg-white bg-opacity-50" style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          textAlign: 'center',
+          width: '100%'
+        }}>
+          [ May luck be in your favor ] <br/>
+          <button onClick={onClick} className="hover:scale-110" > 
+            <img src={playImage.src} width="100px" /> 
+          </button>
+        </div>
+      </h1>
+    </div>    
   )
 }
 
