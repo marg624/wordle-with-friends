@@ -13,6 +13,7 @@ import BoardTask from './BoardTask';
 import Confetti from 'react-confetti'
 import { readGame, updateGame, evaluations } from '../utils/utils';
 import { isMobile } from 'react-device-detect';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 interface Props {
   winningWord: string,
@@ -43,7 +44,8 @@ interface GuessState {
   isFirst: boolean,
   player0?: string,
   player1?: string,
-  waitingFor?: string
+  waitingFor?: string,
+  isCopied: boolean
 };
 
 class Board extends React.Component<Props, GuessState>  {
@@ -72,11 +74,19 @@ class Board extends React.Component<Props, GuessState>  {
     } else {
       player11 = playerName1;
     }
-    this.state = {boardState: boardState1, alphabetState:alphabetState1, gameOverMsg:null, gameOver:false, win:win1, isSinglePlayer:isSinglePlayer1, winningWord: winningWord1, playerName: playerName1, gameId: gameId1, isFirst: isFirst1, player0:player01, player1:player11, waitingFor:""};
+    this.state = {boardState: boardState1, alphabetState:alphabetState1, gameOverMsg:null, gameOver:false, win:win1, isSinglePlayer:isSinglePlayer1, winningWord: winningWord1, playerName: playerName1, gameId: gameId1, isFirst: isFirst1, player0:player01, player1:player11, waitingFor:"", isCopied:false};
     this.focusNext = this.focusNext.bind(this);
     this.updateState = this.updateState.bind(this);
     this.alphaHelper = this.alphaHelper.bind(this);
+    this.sayCopied = this.sayCopied.bind(this);
   }
+
+  sayCopied() {
+    this.setState(Object.assign(this.state, {isCopied: true}))
+    setTimeout(() => {
+      this.setState(Object.assign(this.state, {isCopied: false}))
+    }, 1000);
+  };
 
   // reads game from DB and sees if other player played a word
   async updateState(meFirst) {
@@ -280,7 +290,14 @@ render() {
       <div className={utilStyles.center}> 
         {this.state.win && <Confetti run={false} />}
 
-        {!this.props.isSinglePlayer  &&  <span>Game ID: {this.props.gameId} <br/> <br/></span>}
+        <span className="text-center">
+          Game ID: {this.props.gameId} 
+          <CopyToClipboard text={this.props.gameId} onCopy={() => this.sayCopied()}>
+              <i className="fa">&#x2398;</i>
+          </CopyToClipboard> <br/>
+          {this.state.isCopied && <span className="text-slate-300 text-right"> Copied! </span>} <br/>
+        </span>
+
         {this.props.isFirst && <span><strong>{player0}</strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em> {player1} </span>}
         {!this.props.isFirst && <span>{player0}<strong> <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{showVs}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em>{player1}</strong></span>}
 <br/>
