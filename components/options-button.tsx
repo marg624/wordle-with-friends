@@ -9,6 +9,10 @@ const OptionsButton = () => {
 
   const [showOptions, setShowOptions] = useState(false);
 
+  function toggleOptions() {
+    setShowOptions(!showOptions)
+  }
+
   return (
     <div className="sm:mx-0">
       <button className="w-14 h-14 hover:scale-110 rounded-full bg-gradient-to-r from-amber-300 to-amber-900 text-white shadow-2xl"
@@ -22,7 +26,7 @@ const OptionsButton = () => {
         +
       </button>
       {showOptions && (
-        <InfoOverlay />
+        <InfoOverlay toggleFunc={toggleOptions} />
       )}
     </div>
   )
