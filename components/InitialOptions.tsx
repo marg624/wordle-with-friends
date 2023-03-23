@@ -7,20 +7,20 @@ import mainImage from '../public/assets/cover.png';
 function InitialOptions(props) {
   const [player, setPlayer] = useState("Player" + Math.floor(Math.random() * 1000000));
 
-  const handleSumbitExisting = (event) => {
+  const handleSumbitExisting = async(event) => {
     event.preventDefault();
     const gameId = prompt('Please enter id of game to join')
     const re = /^[0-9\b]+$/;
-    console.log("game id entered: " + gameId)
     let id = gameId
-    let resp = readGame(id);
+    let resp = await readGame(id);
     if (resp == null) {
-      resp = readGame(id);
+      id = await readGame(id);
     }
+
     if (re.test(id)) { 
       props.startGame(id, false, player);
     } else {
-      alert("Invalid Game Id: " + id + ". Must contain only numbers.")
+      alert("Invalid Game Id: " + gameId + "\nPlease create a new game.")
     }
   }
 

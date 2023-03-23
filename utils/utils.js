@@ -87,7 +87,7 @@ export const readGame = async(gameId) => {
         }
       })
     );
-    if (Item == null || Item.content == null || Item.content.S == null) {
+    if (Item == undefined || Item == null || Item.content == null || Item.content.S == null) {
         return null;
     }
     return JSON.parse(Item.content.S);

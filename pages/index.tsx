@@ -48,7 +48,7 @@ export default function Index() {
     <>
       <Layout>
         <Head>
-          <title>IMDB w/ friends</title>
+          <title>Wordle w/ friends</title>
         </Head>
         <Container>
           <Intro />
