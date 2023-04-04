@@ -103,8 +103,8 @@ const Row = ({
     let val = e.target.value;
 
         // if they submitted a word, then validate it
-    if ((index == 4) && e.charCode == 13 || e.keyCode == 13) {
-      const stringData = textArray.join("");
+    if (index == 4 && regex.test(val) && val !== '') {
+      const stringData = textArray.join('') + val;
       if (isWord(stringData)) {
         let ev = evaluations(textArray, winningWord, winningWordArray);
         setEvalArray0(ev);
@@ -121,12 +121,12 @@ const Row = ({
       }
     } else if (isKeyDown) {
           // delete logic - need to change the focus to previous cell
-      if (e.key == 'Backspace') {
+      if (e.key === 'Backspace') {
         if (regex.test(val)) {
           let newArr = [...textArray];
           newArr[index] = '';
           setTextArray(newArr);
-        } else if (val == '') {
+        } else if (val === '') {
           let newArr = [...textArray];
           newArr[index] = val;
           setTextArray(newArr);
