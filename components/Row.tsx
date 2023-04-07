@@ -105,8 +105,11 @@ const Row = ({
         // if they submitted a word, then validate it
     if (index == 4 && regex.test(val) && val !== '') {
       const stringData = textArray.join('') + val;
+      let newTArr = [...textArray];
+      newTArr[index] = val;
+      setTextArray(newTArr);
       if (isWord(stringData)) {
-        let ev = evaluations(textArray, winningWord, winningWordArray);
+        let ev = evaluations(newTArr, winningWord, winningWordArray);
         setEvalArray0(ev);
         let resp = true;
         if (!isSinglePlayer) {
